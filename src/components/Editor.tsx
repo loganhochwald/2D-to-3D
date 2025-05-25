@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react';
 import { EditorView, basicSetup } from 'codemirror';
 import { javascript } from '@codemirror/lang-javascript';
 import { EditorState } from '@codemirror/state';
+import { color, oneDark } from '@codemirror/theme-one-dark';
 
 type EditorProps = {
   initialDoc?: string;
@@ -20,6 +21,7 @@ export default function Editor({ initialDoc = '', onChange }: EditorProps) {
       extensions: [
         basicSetup,
         javascript(),
+        oneDark,
         EditorView.updateListener.of((update) => {
           if (update.docChanged) {
             const doc = update.state.doc.toString();
@@ -43,8 +45,11 @@ export default function Editor({ initialDoc = '', onChange }: EditorProps) {
 
   return (
     <div
-      className="w-full h-full bg-gray-100 text-xl rounded-xl overflow-y-auto"
+      className="w-full h-full text-xl rounded-xl overflow-y-auto"
       ref={editorRef}
+      style={{
+        backgroundColor: color.background,
+      }}
     />
   );
 }
