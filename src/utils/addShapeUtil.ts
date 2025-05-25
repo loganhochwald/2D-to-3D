@@ -1,4 +1,10 @@
-import * as THREE from 'three';
+import {
+  Scene,
+  Mesh,
+  BoxGeometry,
+  SphereGeometry,
+  MeshNormalMaterial,
+} from 'three';
 
 export type Shape = {
   type: 'cube' | 'sphere';
@@ -8,9 +14,9 @@ export type Shape = {
 };
 
 export default function addShapesToScene(
-  scene: THREE.Scene,
+  scene: Scene,
   shapes: Shape[],
-  meshes: THREE.Mesh[],
+  meshes: Mesh[],
 ) {
   // Remove and dispose old meshes
   meshes.forEach((mesh) => {
@@ -25,20 +31,16 @@ export default function addShapesToScene(
   meshes.length = 0;
 
   shapes.forEach((shape) => {
-    let mesh: THREE.Mesh;
+    let mesh: Mesh;
     if (shape.type === 'cube') {
-      mesh = new THREE.Mesh(
-        new THREE.BoxGeometry(
-          shape.size ?? 1,
-          shape.size ?? 1,
-          shape.size ?? 1,
-        ),
-        new THREE.MeshNormalMaterial(),
+      mesh = new Mesh(
+        new BoxGeometry(shape.size ?? 1, shape.size ?? 1, shape.size ?? 1),
+        new MeshNormalMaterial(),
       );
     } else if (shape.type === 'sphere') {
-      mesh = new THREE.Mesh(
-        new THREE.SphereGeometry(shape.radius ?? 0.5, 32, 32),
-        new THREE.MeshNormalMaterial(),
+      mesh = new Mesh(
+        new SphereGeometry(shape.radius ?? 0.5, 32, 32),
+        new MeshNormalMaterial(),
       );
     } else {
       return;
