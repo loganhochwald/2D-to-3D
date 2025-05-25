@@ -1,7 +1,9 @@
-import { createMachine } from 'xstate';
+import { createMachine, assign } from 'xstate';
 import type { Shape } from '../types';
+import { parseDSL } from '../dsl/dslParser';
 
 interface Context {
+  code: string;
   shapes: Shape[];
   selectedShape?: Shape;
 }
@@ -12,12 +14,14 @@ export const editorMachine = createMachine(
       context: {} as Context,
       events: {} as
         | { type: 'SELECT_SHAPE'; shape: Shape }
-        | { type: 'DESELECT_SHAPE' },
+        | { type: 'DESELECT_SHAPE' }
+        | { type: 'UPDATE_CODE'; code: string },
     },
 
     id: 'editor',
     initial: 'main',
     context: {
+      code: '',
       shapes: [],
     },
 
@@ -27,6 +31,9 @@ export const editorMachine = createMachine(
           SELECT_SHAPE: {
             target: 'editing',
             actions: 'selectShape',
+          },
+          UPDATE_CODE: {
+            actions: 'updateCodeAndShapes',
           },
         },
       },
@@ -43,13 +50,19 @@ export const editorMachine = createMachine(
   {
     actions: {
       selectShape: ({ context, event }) => {
-        if (event.type === 'SELECT_SHAPE') {
-          context.selectedShape = event.shape;
-        }
+        if (event.type === 'SELECT_SHAPE') context.selectedShape = event.shape;
       },
       deselectShape: ({ context }) => {
         context.selectedShape = undefined;
       },
+      updateCodeAndShapes: assign(({ event, context }) => {
+        if (event.type !== 'UPDATE_CODE') return context;
+
+        return {
+          code: event.code,
+          shapes: parseDSL(event.code),
+        };
+      }),
     },
   },
 );
