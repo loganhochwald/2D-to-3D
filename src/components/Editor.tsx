@@ -41,5 +41,10 @@ export default function Editor({ initialDoc = '', onChange }: EditorProps) {
     };
   }, []);
 
-  return <div className="w-full h-full bg-gray-100 text-xl" ref={editorRef} />;
+  return (
+    <div
+      className="w-full h-full bg-gray-100 text-xl rounded-xl overflow-y-auto"
+      ref={editorRef}
+    />
+  );
 }
