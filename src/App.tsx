@@ -3,7 +3,7 @@ import Editor from './components/Editor';
 import SceneRenderer from './components/SceneRenderer';
 import DSLTooltip from './components/DSLTooltip';
 import { parseDSL } from './dsl/dslParser';
-import type { Shape } from './utils/addShapeUtil';
+import type { Shape } from './types';
 
 const App: FC = () => {
   const [code, setCode] = useState<string>('');
