@@ -17,7 +17,9 @@ export default function DSLTooltip() {
             <strong>Syntax:</strong> <code>shape(param=value, ...)</code>
           </p>
           <p className="mb-2">
-            Supported shapes: <code>cube</code>, <code>sphere</code>
+            <strong>Supported shapes:</strong> <code>cube</code>,{' '}
+            <code>sphere</code>
+            <br />
             <br />
             Position params (<code>x</code>, <code>y</code>, <code>z</code>)
             default to <code>0</code>
@@ -27,7 +29,7 @@ export default function DSLTooltip() {
           </p>
           <ul className="list-disc list-inside">
             <li>
-              <code>cube(size=1, x=0, y=0, z=0)</code>
+              <code>cube(size=1, x=1)</code>
             </li>
             <li>
               <code>sphere(radius=1, x=2, y=1, z=-1)</code>
