@@ -1,6 +1,5 @@
 import { useEffect, useRef } from 'react';
 import { EditorView, basicSetup } from 'codemirror';
-import { javascript } from '@codemirror/lang-javascript';
 import { EditorState } from '@codemirror/state';
 import { color, oneDark } from '@codemirror/theme-one-dark';
 import { dslLinter } from '../dsl/linter';
@@ -21,7 +20,6 @@ export default function Editor({ initialDoc = '', onChange }: EditorProps) {
       doc: initialDoc,
       extensions: [
         basicSetup,
-        javascript(),
         oneDark,
         dslLinter,
         EditorView.updateListener.of((update) => {
