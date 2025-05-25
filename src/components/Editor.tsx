@@ -36,6 +36,11 @@ export default function Editor({ initialDoc = '', onChange }: EditorProps) {
       parent: editorRef.current,
     });
 
+    view.dispatch({
+      changes: { from: 0, to: view.state.doc.length, insert: 'cube()' },
+      selection: { anchor: 'cube()'.length },
+    });
+
     view.focus();
 
     viewRef.current = view;
