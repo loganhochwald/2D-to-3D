@@ -10,12 +10,12 @@ const App: FC = () => {
   const shapes = useMemo<Shape[]>(() => parseDSL(code), [code]);
 
   return (
-    <div className="flex flex-col h-screen bg-black p-4 sm:px-8">
+    <div className="h-screen bg-black p-4 sm:px-8 flex flex-col">
       <DSLTooltip />
-      <div className="h-3/4">
+      <div className="flex-[3]">
         <SceneRenderer shapes={shapes} />
       </div>
-      <div className="h-1/4 flex justify-center">
+      <div className="flex-[1] flex justify-center">
         <div className="w-5/6 sm:w-1/2">
           <Editor initialDoc={code} onChange={(val: string) => setCode(val)} />
         </div>
