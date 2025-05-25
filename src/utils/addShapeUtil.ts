@@ -46,6 +46,11 @@ export default function addShapesToScene(
       return;
     }
     mesh.position.set(...shape.position);
+    mesh.userData.rotationSpeed = {
+      x: (Math.random() - 0.5) * 0.01,
+      y: (Math.random() - 0.5) * 0.01,
+      z: (Math.random() - 0.5) * 0.01,
+    };
     scene.add(mesh);
     meshes.push(mesh);
   });

@@ -36,6 +36,14 @@ export default function SceneRenderer({ shapes = [] }: { shapes: Shape[] }) {
 
     const animate = () => {
       requestAnimationFrame(animate);
+      meshesRef.current.forEach((mesh) => {
+        const speed = mesh.userData.rotationSpeed;
+        if (speed) {
+          mesh.rotation.x += speed.x;
+          mesh.rotation.y += speed.y;
+          mesh.rotation.z += speed.z;
+        }
+      });
       controls.update();
       renderer.render(scene, camera);
     };
