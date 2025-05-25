@@ -1,7 +1,7 @@
 import { useState, useMemo, type FC } from 'react';
 import Editor from './components/Editor';
 import SceneRenderer from './components/SceneRenderer';
-import DSLTooltip from './components/DSLTooltip';
+//import DSLTooltip from './components/DSLTooltip';
 import { parseDSL } from './dsl/dslParser';
 import type { Shape } from './utils/addShapeUtil';
 
@@ -11,7 +11,7 @@ const App: FC = () => {
 
   return (
     <div className="h-screen bg-black p-4 sm:px-8 flex flex-col">
-      <DSLTooltip />
+      {/* <DSLTooltip /> */}
       <div className="flex-[3]">
         <SceneRenderer shapes={shapes} />
       </div>
