@@ -36,6 +36,8 @@ export default function Editor({ initialDoc = '', onChange }: EditorProps) {
       parent: editorRef.current,
     });
 
+    view.focus();
+
     viewRef.current = view;
 
     return () => {
