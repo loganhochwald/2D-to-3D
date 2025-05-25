@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react';
 import * as THREE from 'three';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 
 export default function SceneRenderer() {
   const mountRef = useRef<HTMLDivElement>(null);
@@ -20,6 +21,8 @@ export default function SceneRenderer() {
     renderer.setSize(mount.clientWidth, mount.clientHeight);
     mount.appendChild(renderer.domElement);
 
+    const controls = new OrbitControls(camera, renderer.domElement);
+
     // Add basic cube for testing
     const geometry = new THREE.BoxGeometry(1, 1, 1);
     const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
@@ -29,8 +32,7 @@ export default function SceneRenderer() {
     camera.position.z = 5;
 
     const animate = () => {
-      cube.rotation.x += 0.01;
-      cube.rotation.y += 0.01;
+      controls.update();
       renderer.render(scene, camera);
       requestAnimationFrame(animate);
     };
