@@ -1,8 +1,10 @@
 import { useEffect, useRef } from 'react';
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import { addShapesToScene } from '../utils/addShapeUtil';
+import type { Shape } from '../utils/addShapeUtil';
 
-export default function SceneRenderer() {
+export default function Scene({ shapes = [] }: { shapes: Shape[] }) {
   const mountRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -23,11 +25,7 @@ export default function SceneRenderer() {
 
     const controls = new OrbitControls(camera, renderer.domElement);
 
-    // Add basic cube for testing
-    const geometry = new THREE.BoxGeometry(1, 1, 1);
-    const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
-    const cube = new THREE.Mesh(geometry, material);
-    scene.add(cube);
+    addShapesToScene(scene, shapes);
 
     camera.position.z = 5;
 
@@ -41,8 +39,9 @@ export default function SceneRenderer() {
     // Clean up function to remove the renderer from the DOM
     return () => {
       mount.removeChild(renderer.domElement);
+      renderer.dispose();
     };
-  }, []);
+  }, [shapes]);
 
   return <div className="w-full h-full" ref={mountRef} />;
 }
