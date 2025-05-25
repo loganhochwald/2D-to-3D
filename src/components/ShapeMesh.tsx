@@ -4,7 +4,12 @@ import { Mesh } from 'three';
 import { useCursor, Outlines } from '@react-three/drei';
 import type { Shape } from '../types';
 
-export default function ShapeMesh({ shape }: { shape: Shape }) {
+interface ShapeMeshProps {
+  shape: Shape;
+  send: (event: any) => void;
+}
+
+export default function ShapeMesh({ shape, send }: ShapeMeshProps) {
   const meshRef = useRef<Mesh>(null!);
   const [hovered, setHovered] = useState(false);
   const [selected, setSelected] = useState(false);
@@ -39,6 +44,8 @@ export default function ShapeMesh({ shape }: { shape: Shape }) {
     event.stopPropagation();
     setSelected((prev) => {
       const newSelected = !prev;
+      if (newSelected) send({ type: 'SELECT_SHAPE' });
+      else send({ type: 'DESELECT_SHAPE' });
       return newSelected;
     });
   };
