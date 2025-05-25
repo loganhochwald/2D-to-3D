@@ -41,8 +41,8 @@ export const parseDSL = (code: string): Shape[] => {
 
     shapes.push({
       type,
-      size: args.size,
-      radius: args.radius,
+      size: args.size ?? 1,
+      radius: args.radius ?? 0.5,
       position,
     });
   }
