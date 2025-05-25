@@ -1,10 +1,15 @@
-import { useRef, useMemo } from 'react';
-import { useFrame } from '@react-three/fiber';
+import { useRef, useMemo, useState } from 'react';
+import { useFrame, type ThreeEvent } from '@react-three/fiber';
 import { Mesh } from 'three';
+import { useCursor, Outlines } from '@react-three/drei';
 import type { Shape } from '../types';
 
 export default function ShapeMesh({ shape }: { shape: Shape }) {
   const meshRef = useRef<Mesh>(null!);
+  const [hovered, setHovered] = useState(false);
+  const [selected, setSelected] = useState(false);
+
+  useCursor(hovered);
 
   const rotationSpeed = useMemo(
     () => ({
@@ -30,10 +35,25 @@ export default function ShapeMesh({ shape }: { shape: Shape }) {
       <sphereGeometry args={[shape.radius ?? 0.5, 32, 32]} />
     );
 
+  const handleClick = (event: ThreeEvent<MouseEvent>) => {
+    event.stopPropagation();
+    setSelected((prev) => {
+      const newSelected = !prev;
+      return newSelected;
+    });
+  };
+
   return (
-    <mesh ref={meshRef} position={shape.position}>
+    <mesh
+      ref={meshRef}
+      position={shape.position}
+      onPointerOver={() => setHovered(true)}
+      onPointerOut={() => setHovered(false)}
+      onClick={(event) => handleClick(event)}
+    >
       {geometry}
       <meshNormalMaterial />
+      {(hovered || selected) && <Outlines thickness={4} color="white" />}
     </mesh>
   );
 }
