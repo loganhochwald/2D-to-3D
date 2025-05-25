@@ -26,7 +26,10 @@ export const parseDSL = (code: string): Shape[] => {
     if (argsStr.trim() !== '') {
       argsStr.split(',').forEach((part) => {
         const [key, value] = part.split('=')?.map((s) => s.trim());
-        args[key] = parseFloat(value);
+        // Assign if both key and value are present and value is not empty
+        if (key && value !== undefined && value !== '') {
+          args[key] = parseFloat(value);
+        }
       });
     }
 
