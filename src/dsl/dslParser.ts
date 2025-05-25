@@ -12,8 +12,8 @@ export const parseDSL = (code: string): Shape[] => {
   const lines = code.split('\n').filter(Boolean);
 
   for (const line of lines) {
-    // Using regex to match word followed by parentheses
-    const match = line.match(/^(\w+)\(([^)]+)\)$/);
+    // Using regex to match word followed by parentheses (allow empty args)
+    const match = line.match(/^(\w+)\(([^)]*)\)$/);
     if (!match) continue;
 
     // Extract shape type and arguments
@@ -22,12 +22,13 @@ export const parseDSL = (code: string): Shape[] => {
 
     const args: { [key: string]: number } = {};
 
-    // Split arguments by comma and store them in an object
-    // Example: "x=1, y=2, z=3" becomes { x: 1, y: 2, z: 3 }
-    argsStr.split(',').forEach((part) => {
-      const [key, value] = part.split('=')?.map((s) => s.trim());
-      args[key] = parseFloat(value);
-    });
+    // Only parse arguments if argsStr is not empty
+    if (argsStr.trim() !== '') {
+      argsStr.split(',').forEach((part) => {
+        const [key, value] = part.split('=')?.map((s) => s.trim());
+        args[key] = parseFloat(value);
+      });
+    }
 
     const position: [number, number, number] = [
       args.x ?? 0,
