@@ -3,6 +3,7 @@ import { EditorView, basicSetup } from 'codemirror';
 import { javascript } from '@codemirror/lang-javascript';
 import { EditorState } from '@codemirror/state';
 import { color, oneDark } from '@codemirror/theme-one-dark';
+import { dslLinter } from '../dsl/linter';
 
 type EditorProps = {
   initialDoc?: string;
@@ -22,6 +23,7 @@ export default function Editor({ initialDoc = '', onChange }: EditorProps) {
         basicSetup,
         javascript(),
         oneDark,
+        dslLinter,
         EditorView.updateListener.of((update) => {
           if (update.docChanged) {
             const doc = update.state.doc.toString();
