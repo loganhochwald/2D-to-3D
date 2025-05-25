@@ -39,7 +39,7 @@ export default function Editor({ initialDoc = '', onChange }: EditorProps) {
     return () => {
       view.destroy();
     };
-  }, [initialDoc, onChange]);
+  }, []);
 
   return <div ref={editorRef} />;
 }
