@@ -29,18 +29,23 @@ export const parseDSL = (code: string): Shape[] => {
       });
     }
 
-    const position: [number, number, number] = [
-      (args.x as number) ?? 0,
-      (args.y as number) ?? 0,
-      (args.z as number) ?? 0,
-    ];
+    const id: string = (shapes.length + 1).toString();
+
+    const position: [number, number, number] =
+      id === '1'
+        ? [0, 0, 0]
+        : [
+            (args.x as number) ?? (Math.random() - 0.5) * 3,
+            (args.y as number) ?? (Math.random() - 0.5) * 3,
+            (args.z as number) ?? (Math.random() - 0.5) * 3,
+          ];
 
     // Validate color
     const color = (args.color as string) ?? 'white';
     const validatedColor = isValidColor(color) ? color : 'white';
 
     shapes.push({
-      id: (shapes.length + 1).toString(),
+      id: id,
       type,
       size: (args.size as number) ?? 1,
       radius: (args.radius as number) ?? 0.5,
