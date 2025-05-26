@@ -31,14 +31,22 @@ export const parseDSL = (code: string): Shape[] => {
 
     const id: string = (shapes.length + 1).toString();
 
-    const position: [number, number, number] =
-      id === '1'
-        ? [0, 0, 0]
-        : [
-            (args.x as number) ?? (Math.random() - 0.5) * 3,
-            (args.y as number) ?? (Math.random() - 0.5) * 3,
-            (args.z as number) ?? (Math.random() - 0.5) * 3,
-          ];
+    // Generate a hash-based position if x, y, z are not provided
+    // Function to convert a string to a float in the range [-0.5, 0.5]
+    const hashToFloat = (str: string): number => {
+      let hash = 0;
+      for (let i = 0; i < str.length; i++) {
+        hash = (hash << 5) - hash + str.charCodeAt(i);
+        hash |= 0;
+      }
+      return (hash % 1000) / 1000 - 0.5;
+    };
+
+    const position: [number, number, number] = [
+      (args.x as number) ?? hashToFloat(line + 'x') * 3,
+      (args.y as number) ?? hashToFloat(line + 'y') * 3,
+      (args.z as number) ?? hashToFloat(line + 'z') * 3,
+    ];
 
     // Validate color
     const color = (args.color as string) ?? 'white';

@@ -2,6 +2,7 @@ import { createMachine, assign } from 'xstate';
 import type { Shape } from '../types';
 import { parseDSL } from '../dsl/dslParser';
 import { generateDSL } from '../dsl/dslGenerator';
+import { diffShapes } from '../utils/diffShapesUtil';
 
 interface Context {
   code: string;
@@ -99,9 +100,13 @@ export const editorMachine = createMachine(
       updateCodeAndShapes: assign(({ event, context }) => {
         if (event.type !== 'UPDATE_CODE') return context;
 
+        const newCode = event.code;
+        const newShapes = parseDSL(newCode);
+        const updatedShapes = diffShapes(context.shapes, newShapes);
+
         return {
-          code: event.code,
-          shapes: parseDSL(event.code),
+          code: newCode,
+          shapes: updatedShapes,
         };
       }),
     },
