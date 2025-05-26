@@ -7,6 +7,7 @@ import EditingPanel from './EditingPanel';
 import Editor from './Editor';
 import CameraLookAt from './CameraLookAt';
 import DSLGuidePanel from './DSLGuidePanel';
+import DSLGuideContent from './DSLGuideContent'; // Import the guide content
 
 interface SceneRendererProps {
   shapes: Shape[];
@@ -15,6 +16,7 @@ interface SceneRendererProps {
   editorVisible: boolean;
   code: string;
   onCodeChange: (value: string) => void;
+  isGuideVisible: boolean; // Add this prop to control guide visibility
 }
 
 const SceneRenderer: React.FC<SceneRendererProps> = ({
@@ -24,6 +26,7 @@ const SceneRenderer: React.FC<SceneRendererProps> = ({
   editorVisible,
   code,
   onCodeChange,
+  isGuideVisible,
 }) => {
   return (
     <Canvas camera={{ position: [0, 0, 5], fov: 75 }}>
@@ -49,7 +52,7 @@ const SceneRenderer: React.FC<SceneRendererProps> = ({
             selectedShape={selectedShape}
           />
         ))}
-        <DSLGuidePanel />
+        <DSLGuidePanel send={send} />
       </Physics>
       {selectedShape && (
         <Html fullscreen>
@@ -62,6 +65,13 @@ const SceneRenderer: React.FC<SceneRendererProps> = ({
         <Html fullscreen>
           <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 w-5/6 sm:w-1/2 h-48">
             <Editor initialDoc={code} onChange={onCodeChange} />
+          </div>
+        </Html>
+      )}
+      {isGuideVisible && (
+        <Html fullscreen>
+          <div className="absolute top-4 left-4">
+            <DSLGuideContent isGuideVisible={isGuideVisible} />
           </div>
         </Html>
       )}
