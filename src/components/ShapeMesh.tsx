@@ -44,7 +44,7 @@ export default function ShapeMesh({ shape, send }: ShapeMeshProps) {
     event.stopPropagation();
     setSelected((prev) => {
       const newSelected = !prev;
-      if (newSelected) send({ type: 'SELECT_SHAPE' });
+      if (newSelected) send({ type: 'SELECT_SHAPE', shape });
       else send({ type: 'DESELECT_SHAPE' });
       return newSelected;
     });

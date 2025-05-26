@@ -4,10 +4,11 @@ import SceneRenderer from './components/SceneRenderer';
 import DSLTooltip from './components/DSLTooltip';
 import { useMachine } from '@xstate/react';
 import { editorMachine } from './machines/editorMachine';
+import EditingPanel from './components/EditingPanel';
 
 const App: FC = () => {
   const [state, send] = useMachine(editorMachine);
-  const { code, shapes } = state.context;
+  const { code, shapes, selectedShape } = state.context;
 
   return (
     <div className="h-dvh bg-black p-4 sm:px-8 flex flex-col">
@@ -17,10 +18,16 @@ const App: FC = () => {
       </div>
       <div className="flex-[1] flex justify-center">
         <div className="w-5/6 sm:w-1/2">
-          <Editor
-            initialDoc={code}
-            onChange={(val: string) => send({ type: 'UPDATE_CODE', code: val })}
-          />
+          {state.matches('editing') ? (
+            <EditingPanel shape={selectedShape} send={send} />
+          ) : (
+            <Editor
+              initialDoc={code}
+              onChange={(val: string) =>
+                send({ type: 'UPDATE_CODE', code: val })
+              }
+            />
+          )}
         </div>
       </div>
     </div>
