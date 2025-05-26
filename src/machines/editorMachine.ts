@@ -1,6 +1,7 @@
 import { createMachine, assign } from 'xstate';
 import type { Shape } from '../types';
 import { parseDSL } from '../dsl/dslParser';
+import { generateDSL } from '../dsl/dslGenerator';
 
 interface Context {
   code: string;
@@ -16,6 +17,7 @@ export const editorMachine = createMachine(
         | { type: 'SELECT_SHAPE'; shape: Shape }
         | { type: 'DESELECT_SHAPE' }
         | { type: 'UPDATE_SHAPE'; shape: Shape }
+        | { type: 'REPLACE_SHAPE'; shape: Shape }
         | { type: 'UPDATE_CODE'; code: string },
     },
 
@@ -48,6 +50,9 @@ export const editorMachine = createMachine(
           UPDATE_SHAPE: {
             actions: 'updateShape',
           },
+          REPLACE_SHAPE: {
+            actions: 'replaceShape',
+          },
         },
       },
     },
@@ -64,7 +69,7 @@ export const editorMachine = createMachine(
         if (event.type !== 'UPDATE_SHAPE') return context;
 
         const updatedShapes = context.shapes.map((shape) =>
-          shape === context.selectedShape ? event.shape : shape,
+          shape.id === event.shape.id ? event.shape : shape,
         );
 
         return {
@@ -73,6 +78,24 @@ export const editorMachine = createMachine(
           selectedShape: event.shape,
         };
       }),
+      replaceShape: assign(({ context, event }) => {
+        if (event.type !== 'REPLACE_SHAPE') return context;
+
+        const updatedShapes = context.shapes.map((shape) =>
+          shape.id === event.shape.id ? event.shape : shape,
+        );
+
+        const isSelected =
+          context.selectedShape && context.selectedShape.id === event.shape.id;
+
+        return {
+          ...context,
+          shapes: updatedShapes,
+          selectedShape: isSelected ? event.shape : context.selectedShape,
+          code: generateDSL(updatedShapes),
+        };
+      }),
+
       updateCodeAndShapes: assign(({ event, context }) => {
         if (event.type !== 'UPDATE_CODE') return context;
 

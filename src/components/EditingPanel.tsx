@@ -4,7 +4,7 @@ import type { Shape } from '../types';
 interface EditingPanelProps {
   shape?: Shape;
   send: (event: {
-    type: 'DESELECT_SHAPE' | 'UPDATE_SHAPE';
+    type: 'DESELECT_SHAPE' | 'UPDATE_SHAPE' | 'REPLACE_SHAPE';
     shape?: Shape;
   }) => void;
 }
@@ -16,7 +16,7 @@ const EditingPanel: React.FC<EditingPanelProps> = ({ shape, send }) => {
     if (shape) {
       setLocalShape({ ...shape });
     }
-  }, [shape]);
+  }, []);
 
   if (!shape || !localShape) return null;
 
@@ -33,7 +33,7 @@ const EditingPanel: React.FC<EditingPanelProps> = ({ shape, send }) => {
 
   const handleSave = () => {
     if (localShape) {
-      send({ type: 'UPDATE_SHAPE', shape: localShape });
+      send({ type: 'REPLACE_SHAPE', shape: localShape });
     }
     send({ type: 'DESELECT_SHAPE' });
   };
