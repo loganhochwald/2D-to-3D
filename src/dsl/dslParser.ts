@@ -40,7 +40,7 @@ export const parseDSL = (code: string): Shape[] => {
     const validatedColor = isValidColor(color) ? color : 'white';
 
     shapes.push({
-      id: crypto.randomUUID(),
+      id: (shapes.length + 1).toString(),
       type,
       size: (args.size as number) ?? 1,
       radius: (args.radius as number) ?? 0.5,

@@ -60,7 +60,11 @@ const EditingPanel: React.FC<EditingPanelProps> = ({ shape, send }) => {
     <div className="w-full h-full overflow-y-auto bg-gray-800 text-white p-4 rounded-lg">
       <div className="flex items-center justify-between mb-4">
         <h2 className="text-2xl font-semibold">
-          Editing: {localShape.color + ' ' + localShape.type}
+          Editing{': '}
+          {localShape.type.charAt(0).toUpperCase() +
+            localShape.type.slice(1) +
+            ' #' +
+            localShape.id}
         </h2>
         <button
           onClick={handleClose}
