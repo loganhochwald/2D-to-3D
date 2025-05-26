@@ -49,6 +49,7 @@ const SceneRenderer: React.FC<SceneRendererProps> = ({
             selectedShape={selectedShape}
           />
         ))}
+        <DSLGuidePanel />
       </Physics>
       {selectedShape && (
         <Html fullscreen>
@@ -64,7 +65,6 @@ const SceneRenderer: React.FC<SceneRendererProps> = ({
           </div>
         </Html>
       )}
-      <DSLGuidePanel />
     </Canvas>
   );
 };
