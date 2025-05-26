@@ -1,4 +1,5 @@
 import { type Diagnostic, linter } from '@codemirror/lint';
+import { isValidColor } from '../utils/colorUtils';
 
 const knownShapes = ['cube', 'sphere'];
 
@@ -62,10 +63,7 @@ export const dslLinter = linter((view) => {
         }
         const [name, value] = arg.split('=').map((s) => s.trim());
         if (name === 'color') {
-          // Validate color (e.g., hex code or predefined color names)
-          const isValidColor =
-            /^#[0-9A-Fa-f]{6}$/.test(value) || /^[a-zA-Z]+$/.test(value);
-          if (!isValidColor) {
+          if (!isValidColor(value)) {
             diagnostics.push({
               from:
                 view.state.doc.line(i + 1).from +

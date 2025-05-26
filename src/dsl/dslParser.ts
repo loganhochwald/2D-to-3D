@@ -1,4 +1,5 @@
 import type { Shape } from '../types';
+import { isValidColor } from '../utils/colorUtils'; // Import the helper function
 
 export const parseDSL = (code: string): Shape[] => {
   const shapes = [];
@@ -34,13 +35,17 @@ export const parseDSL = (code: string): Shape[] => {
       (args.z as number) ?? 0,
     ];
 
+    // Validate color
+    const color = (args.color as string) ?? 'white';
+    const validatedColor = isValidColor(color) ? color : 'white';
+
     shapes.push({
       id: crypto.randomUUID(),
       type,
       size: (args.size as number) ?? 1,
       radius: (args.radius as number) ?? 0.5,
       position,
-      color: (args.color as string) ?? 'white',
+      color: validatedColor,
     });
   }
 
