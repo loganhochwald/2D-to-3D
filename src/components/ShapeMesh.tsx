@@ -64,7 +64,7 @@ export default function ShapeMesh({
       onClick={(event) => handleClick(event)}
     >
       {geometry}
-      <meshNormalMaterial />
+      <meshStandardMaterial color={shape.color} />
       {(hovered || isSelected) && <Outlines thickness={4} color="white" />}
     </mesh>
   );

@@ -3,4 +3,5 @@ export type Shape = {
   size?: number;
   radius?: number;
   position: [number, number, number];
+  color: string;
 };
