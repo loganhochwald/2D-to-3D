@@ -1,7 +1,7 @@
 import { useRef, useMemo, useState } from 'react';
 import { useFrame, type ThreeEvent } from '@react-three/fiber';
 import { Mesh } from 'three';
-import { useCursor, Outlines } from '@react-three/drei';
+import { useCursor, Edges } from '@react-three/drei';
 import type { Shape } from '../types';
 
 interface ShapeMeshProps {
@@ -65,7 +65,10 @@ export default function ShapeMesh({
     >
       {geometry}
       <meshStandardMaterial color={shape.color} />
-      {(hovered || isSelected) && <Outlines thickness={4} color="white" />}
+      <Edges
+        linewidth={hovered || isSelected ? 4 : 2}
+        color={hovered || isSelected ? 'white' : 'black'}
+      />
     </mesh>
   );
 }
