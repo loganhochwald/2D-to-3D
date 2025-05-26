@@ -24,7 +24,7 @@ const DSLGuidePanel: React.FC<DSLGuidePanelProps> = ({ send }) => {
         onPointerOver={() => setHovered(true)}
         onPointerOut={() => setHovered(false)}
       >
-        <Text3D height={0.1} size={0.4} font="public/Inter_Bold.json">
+        <Text3D height={0.1} size={0.4} font="/Inter_Bold.json">
           ?
           <meshStandardMaterial color={hovered ? '#ffaaaa' : 'red'} />
           <Edges scale={1.01} threshold={15} color="black" />
