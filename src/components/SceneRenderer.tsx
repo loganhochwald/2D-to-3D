@@ -1,5 +1,5 @@
 import { Canvas } from '@react-three/fiber';
-import { OrbitControls } from '@react-three/drei';
+import { OrbitControls, Stars } from '@react-three/drei';
 import ShapeMesh from './ShapeMesh';
 import type { Shape } from '../types';
 
@@ -18,6 +18,14 @@ const SceneRenderer: React.FC<SceneRendererProps> = ({
     <Canvas camera={{ position: [0, 0, 5], fov: 75 }}>
       <ambientLight />
       <OrbitControls />
+      <Stars
+        radius={100}
+        depth={50}
+        count={5000}
+        factor={4}
+        saturation={0}
+        fade
+      />
       {shapes.map((shape) => (
         <ShapeMesh
           key={shape.id}
