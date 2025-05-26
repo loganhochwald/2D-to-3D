@@ -5,7 +5,7 @@ import { editorMachine } from './machines/editorMachine';
 
 const App: FC = () => {
   const [state, send] = useMachine(editorMachine);
-  const { code, shapes, selectedShape } = state.context;
+  const { code, shapes, selectedShape, isGuideVisible } = state.context;
 
   return (
     <div className="h-dvh bg-black flex flex-col">
@@ -16,6 +16,7 @@ const App: FC = () => {
         editorVisible={!state.matches('editing')}
         code={code}
         onCodeChange={(val: string) => send({ type: 'UPDATE_CODE', code: val })}
+        isGuideVisible={isGuideVisible}
       />
     </div>
   );

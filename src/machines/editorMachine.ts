@@ -8,6 +8,7 @@ interface Context {
   code: string;
   shapes: Shape[];
   selectedShape: Shape | undefined;
+  isGuideVisible: boolean;
 }
 
 export const editorMachine = createMachine(
@@ -19,7 +20,8 @@ export const editorMachine = createMachine(
         | { type: 'DESELECT_SHAPE' }
         | { type: 'UPDATE_SHAPE'; shape: Shape }
         | { type: 'REPLACE_SHAPE'; shape: Shape }
-        | { type: 'UPDATE_CODE'; code: string },
+        | { type: 'UPDATE_CODE'; code: string }
+        | { type: 'TOGGLE_GUIDE' },
     },
 
     id: 'editor',
@@ -28,6 +30,7 @@ export const editorMachine = createMachine(
       code: 'cube()',
       shapes: [],
       selectedShape: undefined,
+      isGuideVisible: false,
     },
 
     states: {
@@ -39,6 +42,9 @@ export const editorMachine = createMachine(
           },
           UPDATE_CODE: {
             actions: 'updateCodeAndShapes',
+          },
+          TOGGLE_GUIDE: {
+            actions: 'toggleGuide',
           },
         },
       },
@@ -53,6 +59,9 @@ export const editorMachine = createMachine(
           },
           REPLACE_SHAPE: {
             actions: 'replaceShape',
+          },
+          TOGGLE_GUIDE: {
+            actions: 'toggleGuide',
           },
         },
       },
@@ -96,7 +105,6 @@ export const editorMachine = createMachine(
           code: generateDSL(updatedShapes),
         };
       }),
-
       updateCodeAndShapes: assign(({ event, context }) => {
         if (event.type !== 'UPDATE_CODE') return context;
 
@@ -107,6 +115,12 @@ export const editorMachine = createMachine(
         return {
           code: newCode,
           shapes: updatedShapes,
+        };
+      }),
+      toggleGuide: assign(({ context }) => {
+        return {
+          ...context,
+          isGuideVisible: !context.isGuideVisible,
         };
       }),
     },
