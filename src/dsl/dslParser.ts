@@ -35,6 +35,7 @@ export const parseDSL = (code: string): Shape[] => {
     ];
 
     shapes.push({
+      id: crypto.randomUUID(),
       type,
       size: (args.size as number) ?? 1,
       radius: (args.radius as number) ?? 0.5,

@@ -18,9 +18,9 @@ const SceneRenderer: React.FC<SceneRendererProps> = ({
     <Canvas camera={{ position: [0, 0, 5], fov: 75 }}>
       <ambientLight />
       <OrbitControls />
-      {shapes.map((shape, i) => (
+      {shapes.map((shape) => (
         <ShapeMesh
-          key={i}
+          key={shape.id}
           shape={shape}
           send={send}
           selectedShape={selectedShape}
