@@ -7,8 +7,7 @@ import EditingPanel from './EditingPanel';
 import Editor from './Editor';
 import CameraLookAt from './CameraLookAt';
 import DSLGuidePanel from './DSLGuidePanel';
-import DSLGuideContent from './DSLGuideContent'; // Import the guide content
-
+import DSLGuideContent from './DSLGuideContent';
 interface SceneRendererProps {
   shapes: Shape[];
   send: (event: any) => void;
@@ -16,7 +15,7 @@ interface SceneRendererProps {
   editorVisible: boolean;
   code: string;
   onCodeChange: (value: string) => void;
-  isGuideVisible: boolean; // Add this prop to control guide visibility
+  isGuideVisible: boolean;
 }
 
 const SceneRenderer: React.FC<SceneRendererProps> = ({
