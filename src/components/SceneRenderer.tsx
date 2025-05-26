@@ -5,6 +5,7 @@ import ShapeMesh from './ShapeMesh';
 import type { Shape } from '../types';
 import EditingPanel from './EditingPanel';
 import Editor from './Editor';
+import CameraLookAt from './CameraLookAt';
 
 interface SceneRendererProps {
   shapes: Shape[];
@@ -26,7 +27,10 @@ const SceneRenderer: React.FC<SceneRendererProps> = ({
   return (
     <Canvas camera={{ position: [0, 0, 5], fov: 75 }}>
       <ambientLight />
-      <OrbitControls />
+      <OrbitControls enabled={!selectedShape} />
+      <CameraLookAt
+        targetPosition={selectedShape ? selectedShape.position : null}
+      />
       <Stars
         radius={100}
         depth={50}
