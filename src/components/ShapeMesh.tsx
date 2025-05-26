@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { useFrame, type ThreeEvent } from '@react-three/fiber';
 import { Mesh } from 'three';
 import { useCursor, Edges } from '@react-three/drei';
@@ -19,19 +19,21 @@ export default function ShapeMesh({
   const meshRef = useRef<Mesh>(null!);
   const rigidBody = useRef<RapierRigidBody>(null);
   const [hovered, setHovered] = useState(false);
+  const applied = useRef(false);
 
   useCursor(hovered);
 
   useFrame(() => {
-    if (rigidBody.current) {
+    if (rigidBody.current && !applied.current) {
       rigidBody.current.setAngvel(
         {
-          x: Math.random() * 1.5,
-          y: Math.random() * 1.5,
-          z: 0,
+          x: (Math.random() - 0.5) * 2,
+          y: (Math.random() - 0.5) * 2,
+          z: (Math.random() - 0.5) * 2,
         },
         true,
       );
+      applied.current = true;
     }
   });
 
