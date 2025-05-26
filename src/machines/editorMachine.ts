@@ -15,6 +15,7 @@ export const editorMachine = createMachine(
       events: {} as
         | { type: 'SELECT_SHAPE'; shape: Shape }
         | { type: 'DESELECT_SHAPE' }
+        | { type: 'UPDATE_SHAPE'; shape: Shape }
         | { type: 'UPDATE_CODE'; code: string },
     },
 
@@ -44,6 +45,9 @@ export const editorMachine = createMachine(
             target: 'main',
             actions: 'deselectShape',
           },
+          UPDATE_SHAPE: {
+            actions: 'updateShape',
+          },
         },
       },
     },
@@ -56,6 +60,19 @@ export const editorMachine = createMachine(
       deselectShape: ({ context }) => {
         context.selectedShape = undefined;
       },
+      updateShape: assign(({ context, event }) => {
+        if (event.type !== 'UPDATE_SHAPE') return context;
+
+        const updatedShapes = context.shapes.map((shape) =>
+          shape === context.selectedShape ? event.shape : shape,
+        );
+
+        return {
+          ...context,
+          shapes: updatedShapes,
+          selectedShape: event.shape,
+        };
+      }),
       updateCodeAndShapes: assign(({ event, context }) => {
         if (event.type !== 'UPDATE_CODE') return context;
 
