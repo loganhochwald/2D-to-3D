@@ -14,7 +14,11 @@ const App: FC = () => {
     <div className="h-dvh bg-black p-4 sm:px-8 flex flex-col">
       <DSLTooltip />
       <div className="flex-[3]">
-        <SceneRenderer shapes={shapes} send={send} />
+        <SceneRenderer
+          shapes={shapes}
+          send={send}
+          selectedShape={selectedShape}
+        />
       </div>
       <div className="flex-[1] flex justify-center">
         <div className="w-5/6 sm:w-1/2">

@@ -5,7 +5,7 @@ import { parseDSL } from '../dsl/dslParser';
 interface Context {
   code: string;
   shapes: Shape[];
-  selectedShape?: Shape;
+  selectedShape: Shape | undefined;
 }
 
 export const editorMachine = createMachine(
@@ -23,6 +23,7 @@ export const editorMachine = createMachine(
     context: {
       code: '',
       shapes: [],
+      selectedShape: undefined,
     },
 
     states: {

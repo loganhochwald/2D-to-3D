@@ -7,12 +7,16 @@ import type { Shape } from '../types';
 interface ShapeMeshProps {
   shape: Shape;
   send: (event: any) => void;
+  selectedShape: Shape | undefined;
 }
 
-export default function ShapeMesh({ shape, send }: ShapeMeshProps) {
+export default function ShapeMesh({
+  shape,
+  send,
+  selectedShape,
+}: ShapeMeshProps) {
   const meshRef = useRef<Mesh>(null!);
   const [hovered, setHovered] = useState(false);
-  const [selected, setSelected] = useState(false);
 
   useCursor(hovered);
 
@@ -33,6 +37,8 @@ export default function ShapeMesh({ shape, send }: ShapeMeshProps) {
     }
   });
 
+  const isSelected = selectedShape === shape;
+
   const geometry =
     shape.type === 'cube' ? (
       <boxGeometry args={[shape.size ?? 1, shape.size ?? 1, shape.size ?? 1]} />
@@ -42,12 +48,11 @@ export default function ShapeMesh({ shape, send }: ShapeMeshProps) {
 
   const handleClick = (event: ThreeEvent<MouseEvent>) => {
     event.stopPropagation();
-    setSelected((prev) => {
-      const newSelected = !prev;
-      if (newSelected) send({ type: 'SELECT_SHAPE', shape });
-      else send({ type: 'DESELECT_SHAPE' });
-      return newSelected;
-    });
+    if (isSelected) {
+      send({ type: 'DESELECT_SHAPE' });
+    } else {
+      send({ type: 'SELECT_SHAPE', shape });
+    }
   };
 
   return (
@@ -60,7 +65,7 @@ export default function ShapeMesh({ shape, send }: ShapeMeshProps) {
     >
       {geometry}
       <meshNormalMaterial />
-      {(hovered || selected) && <Outlines thickness={4} color="white" />}
+      {(hovered || isSelected) && <Outlines thickness={4} color="white" />}
     </mesh>
   );
 }
