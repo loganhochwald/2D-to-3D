@@ -10,26 +10,39 @@ const EditingPanel: React.FC<EditingPanelProps> = ({ shape, send }) => {
   if (!shape) return null;
 
   return (
-    <div className="text-white">
-      <h2 className="text-xl mb-2">Editing: {shape.type}</h2>
+    <div className="w-full h-full bg-gray-800 text-white p-4 rounded-lg">
+      <div className="flex items-center justify-between mb-4">
+        <h2 className="text-2xl font-semibold">
+          Editing: {shape.color + ' ' + shape.type}
+        </h2>
+        <button
+          onClick={() => send({ type: 'DESELECT_SHAPE' })}
+          className="text-red-600 hover:text-red-800 font-bold text-3xl"
+          aria-label="Close"
+        >
+          &times;
+        </button>
+      </div>
 
       {shape.type === 'cube' && (
-        <div>
-          <label className="block">Size: {shape.size}</label>
+        <div className="mb-4">
+          <label className="block text-sm font-medium">Size:</label>
+          <p className="text-lg">{shape.size}</p>
         </div>
       )}
 
       {shape.type === 'sphere' && (
-        <div>
-          <label className="block">Radius: {shape.radius}</label>
+        <div className="mb-4">
+          <label className="block text-sm font-medium">Radius:</label>
+          <p className="text-lg">{shape.radius}</p>
         </div>
       )}
 
       <button
-        onClick={() => send({ type: 'DESELECT_SHAPE' })}
-        className="mt-4 px-4 py-2 bg-white text-black rounded"
+        onClick={() => alert('Save functionality not implemented yet!')}
+        className="w-full mt-4 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded"
       >
-        Deselect
+        Save
       </button>
     </div>
   );
