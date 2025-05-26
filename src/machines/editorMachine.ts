@@ -21,7 +21,7 @@ export const editorMachine = createMachine(
     id: 'editor',
     initial: 'main',
     context: {
-      code: '',
+      code: 'cube()',
       shapes: [],
       selectedShape: undefined,
     },

@@ -5,11 +5,11 @@ import { color, oneDark } from '@codemirror/theme-one-dark';
 import { dslLinter } from '../dsl/linter';
 
 type EditorProps = {
-  initialDoc?: string;
+  initialDoc: string;
   onChange?: (value: string) => void;
 };
 
-export default function Editor({ initialDoc = '', onChange }: EditorProps) {
+export default function Editor({ initialDoc, onChange }: EditorProps) {
   const editorRef = useRef<HTMLDivElement>(null);
   const viewRef = useRef<EditorView | null>(null);
 
@@ -37,13 +37,13 @@ export default function Editor({ initialDoc = '', onChange }: EditorProps) {
     });
 
     view.dispatch({
-      changes: { from: 0, to: view.state.doc.length, insert: 'cube()' },
-      selection: { anchor: 'cube()'.length },
+      changes: { from: 0, to: view.state.doc.length, insert: initialDoc },
+      selection: { anchor: initialDoc.length },
     });
 
-    view.focus();
-
     viewRef.current = view;
+
+    view.focus();
 
     return () => {
       view.destroy();
