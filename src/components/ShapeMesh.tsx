@@ -64,7 +64,11 @@ export default function ShapeMesh({
       onClick={(event) => handleClick(event)}
     >
       {geometry}
-      <meshStandardMaterial color={shape.color} />
+      <meshStandardMaterial
+        color={shape.color}
+        emissive={shape.color}
+        emissiveIntensity={1}
+      />
       <Edges
         linewidth={hovered || isSelected ? 4 : 2}
         color={hovered || isSelected ? 'white' : 'black'}
