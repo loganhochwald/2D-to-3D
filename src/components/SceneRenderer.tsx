@@ -6,6 +6,7 @@ import type { Shape } from '../types';
 import EditingPanel from './EditingPanel';
 import Editor from './Editor';
 import CameraLookAt from './CameraLookAt';
+import DSLGuidePanel from './DSLGuidePanel';
 
 interface SceneRendererProps {
   shapes: Shape[];
@@ -63,6 +64,7 @@ const SceneRenderer: React.FC<SceneRendererProps> = ({
           </div>
         </Html>
       )}
+      <DSLGuidePanel />
     </Canvas>
   );
 };
