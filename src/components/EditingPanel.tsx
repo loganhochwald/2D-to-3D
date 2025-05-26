@@ -5,10 +5,14 @@ import { namedColorToHex } from '../utils/colorUtils';
 
 interface EditingPanelProps {
   shape?: Shape;
-  send: (event: {
-    type: 'DESELECT_SHAPE' | 'UPDATE_SHAPE' | 'REPLACE_SHAPE';
-    shape?: Shape;
-  }) => void;
+  send: (
+    event:
+      | { type: 'SELECT_SHAPE'; shape: Shape }
+      | { type: 'DESELECT_SHAPE' }
+      | { type: 'UPDATE_SHAPE'; shape: Shape }
+      | { type: 'REPLACE_SHAPE'; shape: Shape }
+      | { type: 'UPDATE_CODE'; code: string },
+  ) => void;
 }
 
 const EditingPanel: React.FC<EditingPanelProps> = ({ shape, send }) => {
