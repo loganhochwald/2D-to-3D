@@ -1,8 +1,9 @@
 import { Canvas } from '@react-three/fiber';
-import { OrbitControls, Stars } from '@react-three/drei';
+import { OrbitControls, Stars, Html } from '@react-three/drei';
 import { Physics } from '@react-three/rapier';
 import ShapeMesh from './ShapeMesh';
 import type { Shape } from '../types';
+import EditingPanel from './EditingPanel';
 
 interface SceneRendererProps {
   shapes: Shape[];
@@ -37,6 +38,21 @@ const SceneRenderer: React.FC<SceneRendererProps> = ({
           />
         ))}
       </Physics>
+      {selectedShape && (
+        <Html fullscreen>
+          <div
+            style={{
+              position: 'absolute',
+              top: '1rem',
+              right: '1rem',
+              width: '300px',
+              zIndex: 10,
+            }}
+          >
+            <EditingPanel shape={selectedShape} send={send} />
+          </div>
+        </Html>
+      )}
     </Canvas>
   );
 };

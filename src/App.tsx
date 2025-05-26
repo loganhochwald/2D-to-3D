@@ -22,7 +22,8 @@ const App: FC = () => {
       </div>
       <div className="flex-[1] flex justify-center h-full">
         {state.matches('editing') ? (
-          <EditingPanel shape={selectedShape} send={send} />
+          // <EditingPanel shape={selectedShape} send={send} />
+          <></>
         ) : (
           <div className="w-5/6 sm:w-1/2 h-full">
             <Editor
