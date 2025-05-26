@@ -54,7 +54,7 @@ const EditingPanel: React.FC<EditingPanelProps> = ({ shape, send }) => {
   };
 
   return (
-    <div className="w-full h-full bg-gray-800 text-white p-4 rounded-lg">
+    <div className="w-full h-full overflow-y-auto bg-gray-800 text-white p-4 rounded-lg">
       <div className="flex items-center justify-between mb-4">
         <h2 className="text-2xl font-semibold">
           Editing: {localShape.color + ' ' + localShape.type}
@@ -68,30 +68,32 @@ const EditingPanel: React.FC<EditingPanelProps> = ({ shape, send }) => {
         </button>
       </div>
 
-      {(localShape.type === 'cube' || localShape.type === 'sphere') && (
-        <div className="mb-4">
-          <label className="block text-sm font-medium">
-            {localShape.type === 'cube' ? 'Size:' : 'Radius:'}
-          </label>
+      <div className="flex gap-4 mb-4">
+        {(localShape.type === 'cube' || localShape.type === 'sphere') && (
+          <div className="flex-1">
+            <label className="block text-sm font-medium">
+              {localShape.type === 'cube' ? 'Size:' : 'Radius:'}
+            </label>
+            <input
+              type="number"
+              value={
+                localShape.type === 'cube' ? localShape.size : localShape.radius
+              }
+              onChange={handleDimensionChange}
+              className="w-full mt-1 px-2 py-1 bg-gray-700 text-white rounded"
+            />
+          </div>
+        )}
+
+        <div className="flex-1">
+          <label className="block text-sm font-medium">Color:</label>
           <input
-            type="number"
-            value={
-              localShape.type === 'cube' ? localShape.size : localShape.radius
-            }
-            onChange={handleDimensionChange}
-            className="w-full mt-1 px-2 py-1 bg-gray-700 text-white rounded"
+            type="color"
+            value={localShape.color}
+            onChange={handleColorChange}
+            className="w-full mt-1 h-10"
           />
         </div>
-      )}
-
-      <div className="mb-4">
-        <label className="block text-sm font-medium">Color:</label>
-        <input
-          type="color"
-          value={localShape.color}
-          onChange={handleColorChange}
-          className="w-full mt-1 h-10"
-        />
       </div>
 
       <button

@@ -20,19 +20,19 @@ const App: FC = () => {
           selectedShape={selectedShape}
         />
       </div>
-      <div className="flex-[1] flex justify-center">
-        <div className="w-5/6 sm:w-1/2">
-          {state.matches('editing') ? (
-            <EditingPanel shape={selectedShape} send={send} />
-          ) : (
+      <div className="flex-[1] flex justify-center h-full">
+        {state.matches('editing') ? (
+          <EditingPanel shape={selectedShape} send={send} />
+        ) : (
+          <div className="w-5/6 sm:w-1/2 h-full">
             <Editor
               initialDoc={code}
               onChange={(val: string) =>
                 send({ type: 'UPDATE_CODE', code: val })
               }
             />
-          )}
-        </div>
+          </div>
+        )}
       </div>
     </div>
   );
