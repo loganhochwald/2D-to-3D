@@ -1,5 +1,6 @@
 import { Canvas } from '@react-three/fiber';
 import { OrbitControls, Stars } from '@react-three/drei';
+import { Physics } from '@react-three/rapier';
 import ShapeMesh from './ShapeMesh';
 import type { Shape } from '../types';
 
@@ -26,14 +27,16 @@ const SceneRenderer: React.FC<SceneRendererProps> = ({
         saturation={0}
         fade
       />
-      {shapes.map((shape) => (
-        <ShapeMesh
-          key={shape.id}
-          shape={shape}
-          send={send}
-          selectedShape={selectedShape}
-        />
-      ))}
+      <Physics gravity={[0, 0, 0]}>
+        {shapes.map((shape) => (
+          <ShapeMesh
+            key={shape.id}
+            shape={shape}
+            send={send}
+            selectedShape={selectedShape}
+          />
+        ))}
+      </Physics>
     </Canvas>
   );
 };

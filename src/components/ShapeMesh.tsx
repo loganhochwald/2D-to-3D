@@ -2,6 +2,7 @@ import { useRef, useMemo, useState } from 'react';
 import { useFrame, type ThreeEvent } from '@react-three/fiber';
 import { Mesh } from 'three';
 import { useCursor, Edges } from '@react-three/drei';
+import { RigidBody } from '@react-three/rapier';
 import type { Shape } from '../types';
 
 interface ShapeMeshProps {
@@ -56,23 +57,24 @@ export default function ShapeMesh({
   };
 
   return (
-    <mesh
-      ref={meshRef}
-      position={shape.position}
-      onPointerOver={() => setHovered(true)}
-      onPointerOut={() => setHovered(false)}
-      onClick={(event) => handleClick(event)}
-    >
-      {geometry}
-      <meshStandardMaterial
-        color={shape.color}
-        emissive={shape.color}
-        emissiveIntensity={1}
-      />
-      <Edges
-        linewidth={hovered || isSelected ? 4 : 2}
-        color={hovered || isSelected ? 'white' : 'black'}
-      />
-    </mesh>
+    <RigidBody type="dynamic" position={shape.position}>
+      <mesh
+        ref={meshRef}
+        onPointerOver={() => setHovered(true)}
+        onPointerOut={() => setHovered(false)}
+        onClick={(event) => handleClick(event)}
+      >
+        {geometry}
+        <meshStandardMaterial
+          color={shape.color}
+          emissive={shape.color}
+          emissiveIntensity={1}
+        />
+        <Edges
+          linewidth={hovered || isSelected ? 4 : 2}
+          color={hovered || isSelected ? 'white' : 'black'}
+        />
+      </mesh>
+    </RigidBody>
   );
 }
