@@ -7,11 +7,9 @@ interface EditingPanelProps {
   shape?: Shape;
   send: (
     event:
-      | { type: 'SELECT_SHAPE'; shape: Shape }
       | { type: 'DESELECT_SHAPE' }
       | { type: 'UPDATE_SHAPE'; shape: Shape }
-      | { type: 'REPLACE_SHAPE'; shape: Shape }
-      | { type: 'UPDATE_CODE'; code: string },
+      | { type: 'REPLACE_SHAPE'; shape: Shape },
   ) => void;
 }
 
