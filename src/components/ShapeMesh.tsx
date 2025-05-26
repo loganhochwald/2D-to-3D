@@ -1,8 +1,8 @@
-import { useRef, useMemo, useState } from 'react';
+import { useRef, useState } from 'react';
 import { useFrame, type ThreeEvent } from '@react-three/fiber';
 import { Mesh } from 'three';
 import { useCursor, Edges } from '@react-three/drei';
-import { RigidBody } from '@react-three/rapier';
+import { RigidBody, RapierRigidBody } from '@react-three/rapier';
 import type { Shape } from '../types';
 
 interface ShapeMeshProps {
@@ -17,24 +17,21 @@ export default function ShapeMesh({
   selectedShape,
 }: ShapeMeshProps) {
   const meshRef = useRef<Mesh>(null!);
+  const rigidBody = useRef<RapierRigidBody>(null);
   const [hovered, setHovered] = useState(false);
 
   useCursor(hovered);
 
-  const rotationSpeed = useMemo(
-    () => ({
-      x: (Math.random() - 0.5) * 0.01,
-      y: (Math.random() - 0.5) * 0.01,
-      z: (Math.random() - 0.5) * 0.01,
-    }),
-    [],
-  );
-
   useFrame(() => {
-    if (meshRef.current) {
-      meshRef.current.rotation.x += rotationSpeed.x;
-      meshRef.current.rotation.y += rotationSpeed.y;
-      meshRef.current.rotation.z += rotationSpeed.z;
+    if (rigidBody.current) {
+      rigidBody.current.setAngvel(
+        {
+          x: Math.random() * 1.5,
+          y: Math.random() * 1.5,
+          z: 0,
+        },
+        true,
+      );
     }
   });
 
@@ -57,7 +54,7 @@ export default function ShapeMesh({
   };
 
   return (
-    <RigidBody type="dynamic" position={shape.position}>
+    <RigidBody type="dynamic" position={shape.position} ref={rigidBody}>
       <mesh
         ref={meshRef}
         onPointerOver={() => setHovered(true)}
