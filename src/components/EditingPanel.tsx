@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import type { Shape } from '../types';
+import { isValidColor } from '../utils/colorUtils'; // Import the helper function
 
 interface EditingPanelProps {
   shape?: Shape;
@@ -27,6 +28,16 @@ const EditingPanel: React.FC<EditingPanelProps> = ({ shape, send }) => {
         ? { ...localShape, size: value }
         : { ...localShape, radius: value };
 
+    setLocalShape(updatedShape);
+    send({ type: 'UPDATE_SHAPE', shape: updatedShape });
+  };
+
+  const handleColorChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const colorValue = e.target.value;
+
+    if (!isValidColor(colorValue)) return;
+
+    const updatedShape = { ...localShape, color: colorValue };
     setLocalShape(updatedShape);
     send({ type: 'UPDATE_SHAPE', shape: updatedShape });
   };
@@ -72,6 +83,16 @@ const EditingPanel: React.FC<EditingPanelProps> = ({ shape, send }) => {
           />
         </div>
       )}
+
+      <div className="mb-4">
+        <label className="block text-sm font-medium">Color:</label>
+        <input
+          type="color"
+          value={localShape.color}
+          onChange={handleColorChange}
+          className="w-full mt-1 h-10"
+        />
+      </div>
 
       <button
         onClick={handleSave}
