@@ -44,7 +44,7 @@ export const dslLinter = linter((view) => {
       });
     }
 
-    // Check each argument for name=number
+    // Check each argument for property=value format
     if (args.trim()) {
       const argList = args.split(',').map((arg) => arg.trim());
       argList.forEach((arg) => {
@@ -61,7 +61,26 @@ export const dslLinter = linter((view) => {
           return;
         }
         const [name, value] = arg.split('=').map((s) => s.trim());
-        if (!/^-?\d+(\.\d+)?$/.test(value)) {
+        if (name === 'color') {
+          // Validate color (e.g., hex code or predefined color names)
+          const isValidColor =
+            /^#[0-9A-Fa-f]{6}$/.test(value) || /^[a-zA-Z]+$/.test(value);
+          if (!isValidColor) {
+            diagnostics.push({
+              from:
+                view.state.doc.line(i + 1).from +
+                trimmed.indexOf(arg) +
+                arg.indexOf('=') +
+                1,
+              to:
+                view.state.doc.line(i + 1).from +
+                trimmed.indexOf(arg) +
+                arg.length,
+              severity: 'error',
+              message: `Value for "color" must be a valid color (e.g., #RRGGBB or a color name).`,
+            });
+          }
+        } else if (!/^-?\d+(\.\d+)?$/.test(value)) {
           diagnostics.push({
             from:
               view.state.doc.line(i + 1).from +
