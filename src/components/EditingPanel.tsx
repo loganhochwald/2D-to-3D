@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import type { Shape } from '../types';
-import { isValidColor } from '../utils/colorUtils'; // Import the helper function
+import { isValidColor } from '../utils/colorUtils';
+import { namedColorToHex } from '../utils/colorUtils';
 
 interface EditingPanelProps {
   shape?: Shape;
@@ -89,7 +90,7 @@ const EditingPanel: React.FC<EditingPanelProps> = ({ shape, send }) => {
           <label className="block text-sm font-medium">Color:</label>
           <input
             type="color"
-            value={localShape.color}
+            value={namedColorToHex(localShape.color)}
             onChange={handleColorChange}
             className="w-full mt-1 h-10"
           />
