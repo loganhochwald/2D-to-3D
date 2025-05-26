@@ -43,9 +43,9 @@ export const parseDSL = (code: string): Shape[] => {
     };
 
     const position: [number, number, number] = [
-      (args.x as number) ?? hashToFloat(line + 'x') * 3,
-      (args.y as number) ?? hashToFloat(line + 'y') * 3,
-      (args.z as number) ?? hashToFloat(line + 'z') * 3,
+      (args.x as number) ?? hashToFloat(id + 'x') * 3,
+      (args.y as number) ?? hashToFloat(id + 'y') * 3,
+      (args.z as number) ?? hashToFloat(id + 'z') * 3,
     ];
 
     // Validate color
