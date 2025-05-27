@@ -13,9 +13,9 @@ export const generateDSL = (shapes: Shape[]): string => {
       ];
 
       const [x, y, z] = shape.position;
-      if (x !== defaultPosition[0]) args.push(`x=${x}`);
-      if (y !== defaultPosition[1]) args.push(`y=${y}`);
-      if (z !== defaultPosition[2]) args.push(`z=${z}`);
+      if (x !== defaultPosition[0]) args.push(`x=${x.toFixed(2)}`);
+      if (y !== defaultPosition[1]) args.push(`y=${y.toFixed(2)}`);
+      if (z !== defaultPosition[2]) args.push(`z=${z.toFixed(2)}`);
 
       if (shape.type === 'cube') {
         if (shape.size !== 1) args.push(`size=${shape.size}`);
