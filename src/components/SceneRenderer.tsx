@@ -42,7 +42,7 @@ const SceneRenderer: React.FC<SceneRendererProps> = ({
         saturation={0}
         fade
       />
-      <Physics gravity={[0, 0, 0]}>
+      <Physics gravity={[0, 0, 0]} paused={!editorVisible}>
         {shapes.map((shape) => (
           <ShapeMesh
             key={shape.id}
