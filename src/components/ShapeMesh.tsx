@@ -51,6 +51,14 @@ export default function ShapeMesh({
     if (isSelected) {
       send({ type: 'DESELECT_SHAPE' });
     } else {
+      if (rigidBody.current) {
+        const rigidBodyPosition = rigidBody.current.translation();
+        shape.position = [
+          rigidBodyPosition.x,
+          rigidBodyPosition.y,
+          rigidBodyPosition.z,
+        ];
+      }
       send({ type: 'SELECT_SHAPE', shape });
     }
   };
