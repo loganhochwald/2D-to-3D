@@ -10,20 +10,32 @@ const DSLGuideContent: React.FC<DSLGuideContentProps> = ({
   if (!isGuideVisible) return null;
 
   return (
-    <div
-      className="p-4 bg-gray-800 text-white rounded-lg shadow-lg w-96 h-auto"
-      style={{ cursor: 'grab' }}
-    >
-      <h2 className="text-lg font-bold">DSL Guide</h2>
-      <p>Use the following syntax to create shapes:</p>
-      <ul className="list-disc list-inside">
-        <li>
-          <code>cube(size=1, x=0, y=0, z=0)</code>
+    <div className="p-6 bg-gray-900 text-white rounded-lg shadow-xl max-w-md mx-auto">
+      <h2 className="text-2xl font-extrabold mb-2 text-center">
+        DSL Doodler Guide
+      </h2>
+      <p className="mb-1 text-base text-gray-300 leading-relaxed font-medium">
+        Mix and match the syntax below to create shapes:
+      </p>
+      <ul className="list-disc list-inside space-y-3">
+        <li className="text-base text-gray-300">
+          <code className="bg-gray-800 text-green-400 text-sm px-2 py-1 rounded inline-block mt-1">
+            cube(size=1, color='blue')
+          </code>
         </li>
-        <li>
-          <code>sphere(radius=0.5, color=red)</code>
+        <li className="text-base text-gray-300">
+          <code className="bg-gray-800 text-blue-400 text-sm px-2 py-1 rounded inline-block mt-1">
+            sphere(radius=0.5)
+          </code>
+          <br />
+          <span className="text-sm text-gray-400">
+            (Add x, y, z for position)
+          </span>
         </li>
       </ul>
+      <p className="mt-4 text-base text-gray-300 font-medium">
+        Click shapes to edit their properties.
+      </p>
     </div>
   );
 };
