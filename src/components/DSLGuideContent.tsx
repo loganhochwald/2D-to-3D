@@ -33,7 +33,7 @@ const DSLGuideContent: React.FC<DSLGuideContentProps> = ({
           </span>
         </li>
       </ul>
-      <p className="mt-4 text-base text-gray-300 font-medium">
+      <p className="mt-4 text-base text-center text-gray-300 font-medium">
         Click shapes to edit their properties.
       </p>
     </div>
