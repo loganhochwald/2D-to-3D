@@ -65,7 +65,7 @@ const EditingPanel: React.FC<EditingPanelProps> = ({ shape, send }) => {
         </h2>
         <button
           onClick={handleClose}
-          className="text-red-600 hover:text-red-800 font-bold text-3xl"
+          className="text-red-600 hover:text-red-800 font-bold text-3xl cursor-pointer"
           aria-label="Close"
         >
           &times;
@@ -102,7 +102,7 @@ const EditingPanel: React.FC<EditingPanelProps> = ({ shape, send }) => {
 
       <button
         onClick={handleSave}
-        className="w-full mt-4 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded"
+        className="w-full mt-4 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded cursor-pointer"
       >
         Save
       </button>
