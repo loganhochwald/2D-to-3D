@@ -55,7 +55,7 @@ const SceneRenderer: React.FC<SceneRendererProps> = ({
       </Physics>
       {selectedShape && (
         <Html fullscreen>
-          <div className="absolute top-4 right-4 w-[280px]">
+          <div className="absolute top-1 right-4 w-[280px]">
             <EditingPanel shape={selectedShape} send={send} />
           </div>
         </Html>
