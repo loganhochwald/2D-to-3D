@@ -2,15 +2,24 @@ import React from 'react';
 
 interface DSLGuideContentProps {
   isGuideVisible: boolean;
+  send: (event: { type: 'TOGGLE_GUIDE' }) => void;
 }
 
 const DSLGuideContent: React.FC<DSLGuideContentProps> = ({
   isGuideVisible,
+  send,
 }) => {
   if (!isGuideVisible) return null;
 
   return (
-    <div className="p-6 bg-gray-900 text-white rounded-lg shadow-xl max-w-md mx-auto">
+    <div className="relative p-6 bg-gray-900 text-white rounded-lg shadow-xl max-w-md mx-auto">
+      <button
+        className="absolute top-2 right-3 text-red-600 hover:text-red-800 font-bold text-3xl cursor-pointer"
+        aria-label="Close"
+        onClick={() => send({ type: 'TOGGLE_GUIDE' })}
+      >
+        &times;
+      </button>
       <h2 className="text-2xl font-extrabold mb-2 text-center">
         DSL Doodler Guide
       </h2>

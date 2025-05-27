@@ -70,7 +70,7 @@ const SceneRenderer: React.FC<SceneRendererProps> = ({
       {isGuideVisible && (
         <Html fullscreen>
           <div className="absolute top-4 left-4">
-            <DSLGuideContent isGuideVisible={isGuideVisible} />
+            <DSLGuideContent isGuideVisible={isGuideVisible} send={send} />
           </div>
         </Html>
       )}
