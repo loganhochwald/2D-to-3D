@@ -30,7 +30,7 @@ const SceneRenderer: React.FC<SceneRendererProps> = ({
   return (
     <Canvas camera={{ position: [0, 0, 5], fov: 75 }}>
       <ambientLight />
-      <OrbitControls enabled={!selectedShape} />
+      <OrbitControls />
       <CameraLookAt
         targetPosition={selectedShape ? selectedShape.position : null}
       />
