@@ -71,6 +71,7 @@ export const editorMachine = createMachine(
     actions: {
       selectShape: ({ context, event }) => {
         if (event.type === 'SELECT_SHAPE') context.selectedShape = event.shape;
+        context.isGuideVisible = false;
       },
       deselectShape: ({ context }) => {
         context.selectedShape = undefined;
