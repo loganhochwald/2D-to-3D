@@ -64,7 +64,13 @@ export default function ShapeMesh({
   };
 
   return (
-    <RigidBody type="dynamic" position={shape.position} ref={rigidBody}>
+    <RigidBody
+      type="dynamic"
+      position={shape.position}
+      ref={rigidBody}
+      restitution={0.2}
+      linearDamping={0.8}
+    >
       <mesh
         ref={meshRef}
         onPointerOver={() => setHovered(true)}
